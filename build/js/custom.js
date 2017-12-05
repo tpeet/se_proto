@@ -6,6 +6,8 @@
  *     // code here
  * });
  */
+var plot;
+
 (function($,sr){
     // debouncing function from John Hann
     // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
@@ -557,9 +559,9 @@ if (typeof NProgress != 'undefined') {
 		if ($("#chart_plot_02").length){
 			console.log('Plot2');
 			
-			$.plot( $("#chart_plot_02"), 
+			window.plot = $.plot( $("#chart_plot_02"), 
 			[{ 
-				label: "Healt Index", 
+				label: "Health Index", 
 				data: chart_plot_02_data, 
 				lines: { 
 					fillColor: "rgba(150, 202, 89, 0.12)" 
@@ -5066,4 +5068,21 @@ if (typeof NProgress != 'undefined') {
 				
 	});	
 	
+
+$(document).ready(function () {
+      var ws = new WebSocket('ws://localhost:40510');
+
+    // event emmited when connected
+    ws.onopen = function () {
+        console.log('websocket is connected ...')
+
+        // sending a send event to websocket server
+        ws.send('connected')
+    }
+
+    // event emmited when receiving message 
+    ws.onmessage = function (ev) {
+        console.log(ev);
+    }
+});
 
